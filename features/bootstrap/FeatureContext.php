@@ -6,6 +6,7 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use AppBundle\Repository\TaskRepository;
+use Behat\Behat\Hook\Scope\AfterScenarioScope;
 
 /**
  * Defines application features from the specific context.
@@ -20,6 +21,11 @@ class FeatureContext implements Context, SnippetAcceptingContext
      * @var TaskRepository $repository
      */
     protected $repository;
+
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectManager $manager;
+     */
+    protected $manager;
 
     /**
      * Initializes context.
@@ -42,12 +48,16 @@ class FeatureContext implements Context, SnippetAcceptingContext
 
 
         $allTasks = $this->repository->findAllAsArray();
+        $tableTasks = $table->getHash();
 
-        if ($allTasks != $table->getHash())
+        foreach ($allTasks as $k => $task)
         {
-            var_dump($allTasks);
-            var_dump($table->getHash());
-            die();
+            if ($tableTasks[$k] != $task)
+            {
+                var_dump($task);
+                var_dump($tableTasks[$k]);
+                throw new Exception('Tasks not even');
+            }
         }
     }
 
@@ -66,5 +76,14 @@ class FeatureContext implements Context, SnippetAcceptingContext
         }
 
         $this->manager->flush();
+    }
+
+    /**
+     * @AfterScenario @database
+     */
+    public function cleanDB(AfterScenarioScope $scope)
+    {
+        // @todo install Doctrine Fixtures and use ORM Purger to clean the database
+        // see: https://github.com/doctrine/data-fixtures/blob/master/lib/Doctrine/Common/DataFixtures/Purger/ORMPurger.php
     }
 }

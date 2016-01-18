@@ -3,6 +3,7 @@ Feature: Task list
   As a user
   I want to keep track of my tasks
 
+@database
 Scenario: Task list
   Given I have the following tasks:
     | id | name              | isDone |
