@@ -25,12 +25,6 @@ class Task
     private $isDone;
 
     /**
-     * @var \DateTime
-     */
-    private $dueDate;
-
-
-    /**
      * Get id
      *
      * @return integer 
@@ -84,28 +78,5 @@ class Task
     public function getIsDone()
     {
         return $this->isDone;
-    }
-
-    /**
-     * Set dueDate
-     *
-     * @param \DateTime $dueDate
-     * @return Task
-     */
-    public function setDueDate($dueDate)
-    {
-        $this->dueDate = $dueDate;
-
-        return $this;
-    }
-
-    /**
-     * Get dueDate
-     *
-     * @return \DateTime 
-     */
-    public function getDueDate()
-    {
-        return $this->dueDate;
     }
 }

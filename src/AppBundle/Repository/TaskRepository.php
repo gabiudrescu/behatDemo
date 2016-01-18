@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class TaskRepository extends EntityRepository
 {
+    /**
+     * Method to hidrate entities as arrays for easier comparison
+     * @return array
+     */
+    public function findAllAsArray()
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb->select('t');
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

@@ -14,7 +14,4 @@ AppBundle\Entity\Task:
             length: 255
         isDone:
             type: boolean
-        dueDate:
-            type: date
-            nullable: true
     lifecycleCallbacks: {  }
